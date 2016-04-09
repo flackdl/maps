@@ -1,0 +1,22 @@
+{% extends 'maps/container.html' %}
+
+{% block main_container %}
+    <div class="container">
+        <div ng-include="'static/templates/alert.html'"></div>
+        <div class="row">
+            <div class="col-md-10 col-md-offset-2">
+                <h1>Route Setup - <small>setup initial route information</small></h1>
+                <form name="route_form" class="form-horizontal" role="form" novalidate>
+                    <div ng-include="'static/templates/edit_route.html'"></div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <button ng-class="{'btn-success': route_form.$valid && !route_exists(route.id)}" ng-click="create_route(false)" class="btn btn-default navbar-btn" ng-disabled="!route_form.$valid || route_exists(route.id)"><span class="glyphicon glyphicon-arrow-left"></span> Create and Back</button>
+                <button ng-class="{'btn-success': route_form.$valid && !route_exists(route.id)}" ng-click="create_route(true)" class="btn btn-default navbar-btn" ng-disabled="!route_form.$valid || route_exists(route.id)"><span class="glyphicon glyphicon-ok"></span> Create and Start</button>
+                <button class="btn btn-danger" ng-click="go('/')"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

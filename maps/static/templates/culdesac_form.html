@@ -1,0 +1,37 @@
+<!-- Culdesac Info -->
+<form name="culdesac_form" class="form-horizontal" role="form" novalidate>
+    <div class="form-group">
+        <div class="col-md-4 col-md-offset-8">
+            <button ng-if="can_delete_section()" ng-click="delete_panel($index, 'culdesac')" class="btn btn-danger pull-right"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+        </div>
+    </div>
+    <div class="form-group has-warning">
+        <label for="id" class="col-md-2 control-label">Shared Culdesac #</label>
+        <div class="col-md-4">
+            <input ng-model="route.sections[$index].form['id']" ng-change="update_route()" name="id" type="text" class="form-control" id="" placeholder="">
+            <span class="help-block">* Optional.  Has this Cul-de-sac already been completed? Enter the Shared Cul-de-sac # to skip this Cul-de-sac</span>
+        </div>
+    </div>
+    <div class="form-group has-feedback" ng-class="{'has-success': culdesac_form.street.$valid}">
+        <label for="street" class="col-md-2 control-label">Street</label>
+        <div class="col-md-4">
+            <input ng-model="route.sections[$index].form['street']" ng-change="update_route()" name="street" type="text" class="form-control" id="" placeholder="" required>
+            <span ng-if="culdesac_form.street.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+        </div>
+    </div>
+</form>
+
+<span>
+        In order for the cul-de-sac or street dead-end to be rated, it
+        must be within 400 feet of the participants’ home and will
+        usually (but not always) be the dead-end part of the
+        participants’ street. The participant’s home is considered to
+        be at the mid-point along the sidewalk or pathway in front
+        of the home (house or apartment building). The cul-de-sac
+        opening is the point at which the street widens or bulbs out.
+        The street dead-end opening is 50 feet from the end of the
+        street or to the first driveway, whichever is furthest.
+
+</span>
+
+<hr />

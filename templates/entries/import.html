@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+    <a href="{% url 'admin:index' %}" class="btn btn-info"><span class="glyphicon glyphicon-arrow-left"></span> Back to Dashboard</a>
+    <div class="page-header">
+        <h1>Batch Import Entries</h1>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Expected Columns</div>
+        <div class="panel-body">
+            <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Example</th>
+            </tr>
+            </thead>
+            {% for col in expected_columns %}
+                <tr>
+                    <td><span class="label label-default">{{ col.0 }}</span> </td>
+                    <td>{{ col.1 }}</td>
+                    <td>{{ col.2 }}</td>
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
+    </div>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="btn btn-primary" value="Import">
+        <h5 class="text-primary">* Expected format is .csv,<small><a class="" href="{{ STATIC_URL }}sample_import.csv"><span class="glyphicon glyphicon-download"></span> Download sample file</a></small></h5>
+    </form>
+    {% if submitted %}
+        {% if not success %}
+            <div class="alert alert-danger">
+                <h3><strong>Error!</strong></h3>
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+            <div class="alert alert-success">
+                <h3><strong>Success!</strong> Imported</h3>
+            </div>
+            <h4 class="text text-success">Successfully imported records: {{ imported_rows|length }}</h4>
+            <table class="table table-bordered table-condensed table-striped">
+                {% for imported_row in imported_rows %}
+                    <tr><td class="success">{{ imported_row }}</td></tr>
+                {% endfor %}
+            </table>
+            <h4 class="text text-danger">Failed Records: {{ bad_rows|length }}</h4>
+            <table class="table table-bordered table-condensed table-striped">
+                {% for bad_row in bad_rows %}
+                    <tr><td class="danger">{{ bad_row }}</td></tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    {% endif %}
+{% endblock %}

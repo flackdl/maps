@@ -1,0 +1,95 @@
+{% extends 'maps/container.html' %}
+
+{% block top_nav_left %}
+    <p class="navbar-text">
+        {% verbatim %}{{ surveys[route.survey_id].title }}{% endverbatim %}
+        <span class="label label-primary">#{% verbatim %}{{ route.id }}{% endverbatim %}</span>
+        {% verbatim %}{{ percent_complete_all(route) }}%{% endverbatim %}
+    </p>
+{% endblock %}
+
+{% block top_nav %}
+    <li><button onclick="$('.collapse.in').collapse('hide')" class="btn btn-xs btn-default navbar-btn"><span class="glyphicon glyphicon-collapse-up"></span> Collapse All</button></li>
+    <li class="dropdown">
+        <a href="" class="dropdown-toggle" data-toggle="dropdown">Jump to<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li><a href="" data-target="#route_info" data-toggle="collapse" data-parent="#accordion">General Setup</a></li>
+            <li ng-repeat="panel in panels">
+                <a href="" data-target="#{% verbatim %}{{ panel.id }}{% endverbatim %}" data-toggle="collapse" data-parent="#accordion">
+                    {% verbatim %}{{ panel.title }}{% endverbatim %}
+                </a>
+            </li>
+        </ul>
+    </li>
+{% endblock %}
+
+{% block main_container %}
+    <div class="container maps-route-container">
+        <div ng-include="'static/templates/alert.html'"></div>
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <!-- General panel header -->
+                <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" data-target="#route_info">
+                    <h4 class="panel-title">
+                        General Setup
+                        <span class="pull-right">
+                            <span class="glyphicon glyphicon-lock"></span>
+                            <span ng-switch="route_form.$valid && !route_exists(route.id)">
+                                <span ng-switch-when="true" class="text text-success glyphicon glyphicon-ok"></span>
+                                <span ng-switch-when="false" class="text text-danger glyphicon glyphicon-warning-sign"></span>
+                            </span>
+                        </span>
+                    </h4>
+                </div>
+                <!-- General panel body -->
+                <div id="route_info" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <form name="route_form" class="form-horizontal" role="form" novalidate>
+                            <div ng-include="'static/templates/edit_route.html'"></div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button ng-click="update_route_info()" class="btn" ng-disabled="route_form.$pristine || route_form.$invalid || route_exists(route.id)" ng-class="{'btn-success': route_form.$dirty && route_form.$valid, 'btn-default': route_form.$valid && !route_exists(route.id), 'btn-danger': !route_form.$valid || route_exists(route.id)}">Update</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Item Panels -->
+            <div class="panel panel-default" ng-repeat="panel in panels">
+                <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" data-target="#{% verbatim %}{{ panel.id }}{% endverbatim %}" onclick="$('html, body').animate({scrollTop:(0)}, '2000');">
+                    <h4 class="panel-title">
+                        {% verbatim %}{{ panel.title }}{% endverbatim %}
+                        <span class="pull-right">
+                            <span ng-switch="panel.locked">
+                                <span ng-switch-when="true" class="glyphicon glyphicon-lock"></span>
+                                <span ng-switch-when="false" class="glyphicon glyphicon-trash"></span>
+                            </span>
+                            <span class="text" ng-class="{'text-success': section_completed(route, $index, panel.survey_section), 'text-danger': !section_completed(route, $index, panel.survey_section)}">
+                                {% verbatim %}{{ percent_complete(route, $index, panel.survey_section) }}%{% endverbatim %}
+                            </span>
+                            <span ng-switch="section_completed(route, $index, panel.survey_section)">
+                                <span ng-switch-when="true" class="text-success glyphicon glyphicon-star"></span>
+                                <span ng-switch-when="false" class="text-danger glyphicon glyphicon-star-empty"></span>
+                            </span>
+                        </span>
+                    </h4>
+                </div>
+                <div id="{% verbatim %}{{ panel.id }}{% endverbatim %}" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div ng-if="panel.header_form_url" ng-include="panel.header_form_url"></div>
+                        <div survey surveyitems="panel.items" surveysection="{% verbatim %}{{ panel.survey_section }}{% endverbatim %}" route="route" entries="panel.entries" sectionindex="$index" />
+                    </div>
+                </div>
+            </div>
+            <!-- END Item Panels -->
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block bottom_nav %}
+    <button ng-if="can_add_section('segment')" class="btn btn-xs btn-maps-default navbar-btn" ng-click="add_panel('segment')"><span class="glyphicon glyphicon-plus"></span> Add Segment</button>
+    <button ng-if="can_add_section('crossing')" class="btn btn-xs btn-maps-default navbar-btn" ng-click="add_panel('crossing')"><span class="glyphicon glyphicon-plus"></span> Add Crossing</button>
+    <button ng-if="can_add_section('culdesac')" class="btn btn-xs btn-maps-default navbar-btn" ng-click="add_panel('culdesac')"><span class="glyphicon glyphicon-plus"></span> Add Culdesac</button>
+{% endblock %}

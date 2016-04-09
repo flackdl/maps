@@ -1,0 +1,13 @@
+<div item-helper-modal unique="unique" item="item"></div>
+<form role="form" name="form{{ unique }}" novalidate>
+    <div class="form-group" ng-class="{'has-success': has_selected()}">
+        <label class="control-label" for="{{ item.id }}">{{ item.title }}</label>
+        <button ng-if="item.helper" class="btn btn-link" data-toggle="modal" data-target="#{{ unique }}"><span class="glyphicon glyphicon-question-sign"></span></button>
+        <div class="radio" ng-repeat="option in item.options">
+            <label>
+                <input required ng-checked="is_selected(option.id)" ng-model="dummy" ng-click="changed(option.id)" type="radio" name="{{ item.id }}" value="{{ option.id }}">
+                {{ option.title }}
+            </label>
+        </div>
+    </div>
+</form>

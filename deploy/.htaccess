@@ -1,0 +1,13 @@
+AddHandler fcgid-script .fcgi
+RewriteEngine On
+# don't rewrite the subdomains pointing to the "sites" subdirectory
+RewriteCond %{REQUEST_URI} !^/sites.*
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ alr.fcgi/$1 [QSA,L]
+
+# never cache this stuff
+<FilesMatch "\.(css|js|html)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires 0
+</FilesMatch>

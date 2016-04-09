@@ -1,0 +1,46 @@
+body {
+    padding: 70px 0 110px 0;
+}
+
+@media (max-width: 1200px) {
+    .maps-route-container {
+        padding-top: 50px;
+    }
+}
+
+.navbar-btn {
+    margin-right: 5px;
+}
+
+.panel-title span {
+    padding-left: 10px;
+}
+
+.panel-heading {
+    cursor: pointer;
+}
+.panel-heading:active {
+    background-color: #C7C8DC;
+}
+
+/* give form labels full width so they're more easily clickable */
+.form-group .radio label, .form-group .checkbox label {
+    display: block;
+}
+
+.sub-nav {
+    padding-bottom: 20px;
+}
+
+.maps-bottom-nav, .maps-bottom-nav li {
+   display: inline;
+}
+
+.btn-maps-default {
+    color: #ffffff;
+    background-color: #5FB6BC;
+}
+.btn-maps-default:hover {
+    color: #ffffff;
+    background-color: #788687;
+}

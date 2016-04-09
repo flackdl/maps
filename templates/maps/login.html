@@ -1,0 +1,37 @@
+{% extends 'maps/container.html' %}
+
+{% block main_container %}
+    <div ng-controller="loginCtrl">
+        <div class="container">
+            <div ng-if="error" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" ng-click="clear_error()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <strong>Warning!</strong> {% verbatim %}{{ error }}{% endverbatim %}
+            </div>
+            <div class="page-header">
+                <h1 class="col-sm-offset-3">Please sign in</h1>
+            </div>
+            <form class="form-horizontal" role="form" method="POST" autocomplete="off">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username" class="col-sm-2 col-sm-offset-2 control-label">Username</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" ng-model="username" name="username" id="username" placeholder="username" autofocus autocomplete="off">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-sm-2 col-sm-offset-2 control-label">Password</label>
+                    <div class="col-sm-4">
+                        <input type="password" class="form-control" ng-model="password" name="password" id="password" placeholder="password" autocomplete="off">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-4">
+                        <button ng-if="$root.app_is_cached" class="btn btn-primary btn-block" ng-click="login()"><h4><span class="glyphicon glyphicon-log-in"></span> Sign In</h4></button>
+                        <button ng-if="!$root.app_is_cached && !$root.app_cache_error" class="btn btn-warning btn-block disabled" disabled><h4><span class="glyphicon glyphicon-flash"></span> Application Is Loading...</h4></button>
+                        <button ng-if="$root.app_cache_error" class="btn btn-danger btn-block disabled" disabled><h4><span class="glyphicon glyphicon-warning-sign"></span> Cache Error</h4></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

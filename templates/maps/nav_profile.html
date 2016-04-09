@@ -1,0 +1,11 @@
+<li class="dropdown" ng-if="logged_in()">
+    <a href="" class="dropdown-toggle" data-toggle="dropdown">
+        <span class="glyphicon glyphicon-user"></span><span> {% verbatim %}{{ username }}{% endverbatim %}</span> <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu">
+        <li ng-switch="online" ng-class="{'disabled': !online}">
+            <a ng-switch-when="true" href="" ng-click="logout()">Logout</a>
+            <a ng-switch-when="false">Logout</a>
+        </li>
+    </ul>
+</li>

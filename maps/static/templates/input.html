@@ -1,0 +1,16 @@
+<div item-helper-modal unique="unique" item="item"></div>
+<form role="form" name="form{{ unique }}" novalidate>
+    <div class="form-group" ng-class="{'has-success': form{{ unique }}.$valid, 'has-error': ! form{{ unique }}.input.$valid && form{{ unique }}.input.$dirty}">
+        <label class="control-label" for="{{ item.id }}">{{ item.title }}</label>
+        <button ng-if="item.helper" class="btn btn-link" data-toggle="modal" data-target="#{{ unique }}"><span class="glyphicon glyphicon-question-sign"></span></button>
+        <div ng-switch="item.type">
+            <input ng-switch-when="number" required class="form-control" ng-model="item.value" ng-change="changed()" name="input" type="number" min="0" placeholder="{{ item.label }}">
+            <input ng-switch-when="text" required class="form-control" ng-model="item.value" ng-change="changed()" ng-disabled="item.checked_not_applicable" name="input" type="text" placeholder="{{ item.label }}">
+        </div>
+    </div>
+    <div class="checkbox col-sm-offset-10" ng-if="item.include_not_applicable && item.type=='text'">
+        <label>
+            <input type="checkbox" ng-model="item.checked_not_applicable"> N/A?
+        </label>
+    </div>
+</form>

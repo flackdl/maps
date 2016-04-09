@@ -1,0 +1,2 @@
+<li><button class="btn btn-xs navbar-btn" ng-click="sync_all()" ng-class="{'btn-success': online, 'btn-default': !online}" ng-disabled="!online || !need_sync()"><span class="glyphicon glyphicon-cloud-upload"></span> Sync All </button></li>
+<li><button class="btn btn-xs navbar-btn" ng-click="remove_synced_and_completed()" ng-class="{'btn-danger': online, 'btn-default': !online}" ng-disabled="!online || !has_synced_and_completed()"><span class="glyphicon glyphicon-remove-sign"></span> Remove Synced & Completed </button></li>

@@ -1,0 +1,49 @@
+<div class="form-group has-feedback" ng-class="{'has-success': route_form.id.$valid, 'has-error': route_exists(route.id), 'has-warning': route_form.id.$invalid}">
+    <label for="id" class="col-md-2 control-label">Route #</label>
+    <div class="col-md-4">
+        <input ng-model="route.id" name="id" type="text" class="form-control" id="" placeholder="" required>
+        <span ng-if="route_form.id.$valid && !route_exists(route.id)" class="glyphicon glyphicon-ok form-control-feedback"></span>
+        <!-- route exists / show error-->
+        <span ng-if="route_exists(route.id)" class="glyphicon glyphicon-remove form-control-feedback"></span>
+        <span ng-if="route_exists(route.id)" class="help-block text-danger">This route id already exists</span>
+    </div>
+</div>
+<!--
+<div class="form-group has-feedback" ng-class="{'has-success': route_form.start_time.$valid, 'has-warning': route_form.start_time.$invalid}">
+    <label for="route_start_time" class="col-md-2 control-label">Start Time</label>
+    <div class="col-md-4">
+        <input ng-model="route.start_time" name="start_time" type="datetime-local" class="form-control" id="" placeholder="YYYY-MM-DD" required>
+        <span ng-show="route_form.start_time.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+    </div>
+</div>
+<div class="form-group has-feedback" ng-class="{'has-success': route_form.end_time.$valid, 'has-warning': route_form.end_time.$invalid}">
+    <label for="route_end_time" class="col-md-2 control-label">End Time</label>
+    <div class="col-md-4">
+        <input ng-model="route.end_time" name="end_time" type="datetime-local" class="form-control" id="" placeholder="YYYY-MM-DD" required>
+        <span ng-show="route_form.end_time.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+    </div>
+</div>
+-->
+<div class="form-group" ng-class="{'has-success': route_form.survey.$valid, 'has-warning': route_form.survey.$invalid}">
+    <label for="survey" class="col-md-2 control-label">Survey Type</label>
+    <div class="col-md-4">
+        <select ng-model="route.survey_id" name="survey" class="form-control" id="" placeholder="" ng-required="can_change_survey" ng-disabled="!can_change_survey" ng-class="{'disabled': !can_change_survey}">
+             <option value="">Choose ...</option>
+            <option ng-selected="route.survey_id==survey.id" ng-repeat="survey in surveys" value="{{ survey.id }}">{{ survey.title }}</option>
+        </select>
+    </div>
+</div>
+<div class="form-group">
+    <label for="starting_address" class="col-md-2 control-label">Starting Address</label>
+    <div class="col-md-4">
+        <input ng-model="route.starting_address" name="starting_address" type="text" class="form-control" id="" placeholder="">
+        <span class="help-block">Optional</span>
+    </div>
+</div>
+<div class="form-group">
+    <label for="ending_address" class="col-md-2 control-label">Ending Address</label>
+    <div class="col-md-4">
+        <input ng-model="route.ending_address" name="ending_address" type="text" class="form-control" id="" placeholder="">
+        <span class="help-block">Optional</span>
+    </div>
+</div>

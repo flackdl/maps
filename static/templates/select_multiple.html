@@ -1,0 +1,14 @@
+<div item-helper-modal unique="unique" item="item"></div>
+<form role="form" name="form{{ unique }}" novalidate>
+    <div class="form-group" ng-class="{'has-success': has_checked_items()}">
+        <label class="control-label" for="{{ item.id }}">{{ item.title }}</label>
+        <button ng-if="item.helper" class="btn btn-link" data-toggle="modal" data-target="#{{ unique }}"><span class="glyphicon glyphicon-question-sign"></span></button>
+        <div class="checkbox" ng-repeat="option in item.options">
+            <label>
+                <input type="checkbox" ng-checked="is_checked(option.id)" ng-click="changed(option.id)" value="{{ option.id }}" name="{{ item.id }}">
+                {{ option.title }}
+                </span>
+            </label>
+        </div>
+    </div>
+</form>

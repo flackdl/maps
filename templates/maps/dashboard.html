@@ -1,0 +1,103 @@
+{% extends 'maps/container.html' %}
+
+{% block top_nav %}
+    {% include 'maps/dashboard_nav.html' %}
+{% endblock %}
+
+{% block main_container %}
+    <div class="container sub-nav">
+        <div class="row">
+            <div class="col-xs-2">
+                <span class=""><strong>My Routes</strong></span>
+            </div>
+            <div class="col-xs-2">
+                <span class="">Routes: <span class="badge">{% verbatim %}{{ num_routes() }}{% endverbatim %}</span></span>
+            </div>
+            <div class="col-xs-2">
+                <span class="">Completed: <span class="badge">{% verbatim %}{{ num_complete() }}{% endverbatim %}</span></span>
+            </div>
+            <div class="col-xs-2">
+                <span class="">Incomplete: <span class="badge">{% verbatim %}{{ num_incomplete() }}{% endverbatim %}</span></span>
+            </div>
+            <div class="col-xs-2">
+                <span class="">Synced: <span class="badge">{% verbatim %}{{ num_synced() }}{% endverbatim %}</span></span>
+            </div>
+            <div class="col-xs-2">
+                <a class="btn btn-xs btn-maps-default" ng-click="go('/add-route')"><span class="glyphicon glyphicon-plus"></span> Add Route</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div ng-include="'static/templates/alert.html'"></div>
+        <div ng-show="needs_login" class="alert alert-info">
+            <a href="" class="btn btn-link" ng-click="go('/login')"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+        </div>
+        <div class="row" ng-repeat="row in route_rows">
+            <div class="col-md-6" ng-repeat="route in row">
+                <div class="panel" ng-class="{'panel-success': route.synced && route_completed(route), 'panel-warning': !route.synced || !route_completed(route)}">
+                    <div class="panel-heading" ng-click="go('/route/'+route.id)">
+                        <h3 class="panel-title">
+                            #{% verbatim %}{{ route.id }}{% endverbatim %}
+                            <small class="pull-right text-danger" ng-if="username != route.username">This route is owned by user: {% verbatim %}{{ route.username }}{% endverbatim %}</small>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <span ng-class="{'text-success': percent_complete_all(route)==100, 'text-warning': percent_complete_all(route)!=100}">
+                                    <span class="glyphicon" ng-class="{'glyphicon-ok': percent_complete_all(route)==100, 'glyphicon-star-empty': percent_complete_all(route)!=100}"></span>
+                                    {% verbatim %}{{ percent_complete_all(route) }}%{% endverbatim %}
+                                </span>
+                            </div>
+                            <div class="col-xs-3">
+                                <span ng-switch="route.synced">
+                                    <span ng-switch-when="true" class="text-success"><span class="glyphicon glyphicon-ok"></span> Synced</span>
+                                    <span ng-switch-default class="text-warning"><span class="glyphicon glyphicon-warning-sign"></span> Not Synced</span>
+                                </span>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="pull-right">
+                                    <button ng-switch="route.synced" class="btn btn-xs" ng-click="sync_route(route)" ng-class="{'btn-success': online && route.synced, 'btn-warning': online && !route.synced, 'btn-default': !online}" ng-disabled="!online || route.synced">
+                                        <span ng-switch-when="true"><span class="glyphicon glyphicon-ok"></span> Synced</span>
+                                        <span ng-switch-default><span class="glyphicon glyphicon-cloud-upload"></span> Sync</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="pull-right">
+                                    <button ng-disabled="!route.synced" class="btn btn-danger btn-xs" ng-click="delete_route(route.id)" ng-class="{'disabled': ! route.synced}">
+                                        <span class="glyphicon glyphicon-remove"></span> Remove
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <small>{% verbatim %}{{ route.survey_title }}{% endverbatim %}</small>
+                            </div>
+                            <div class="col-xs-4">
+                                <span class="label label-default" ng-show="route.starting_address">start</span>
+                                <small>{% verbatim %}{{ route.starting_address }}{% endverbatim %}</small>
+                            </div>
+                            <div class="col-xs-4">
+                                <span class="label label-default" ng-show="route.ending_address">end</span>
+                                <small>{% verbatim %}{{ route.ending_address }}{% endverbatim %}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- /container -->
+{% endblock %}
+
+{% block bottom_nav %}
+    <button class="btn btn-xs btn-maps-default navbar-btn" ng-click="go('/add-route')"><span class="glyphicon glyphicon-plus"></span> Add Route</button>
+    <div class="maps-bottom-nav">
+        {% include 'maps/dashboard_nav.html' %}
+        <li><button class="btn btn-xs navbar-btn" ng-click="download_incomplete_routes()" ng-class="{'btn-info': online, 'btn-default disabled': !online}" ng-disabled="!online"><span class="glyphicon glyphicon-cloud-download"></span> Download In-Progress Routes</button></li>
+    </div>
+{% endblock %}

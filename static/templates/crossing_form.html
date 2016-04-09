@@ -1,0 +1,65 @@
+<!-- Crossing Info -->
+<form name="crossing_form" class="form-horizontal" role="form" novalidate>
+    <div class="form-group">
+        <div class="col-md-4 col-md-offset-8">
+            <button ng-if="can_delete_section()" ng-click="delete_panel($index, 'crossing')" class="btn btn-danger pull-right"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+        </div>
+    </div>
+    <div class="form-group has-warning">
+        <label for="id" class="col-md-2 control-label">Shared Crossing #</label>
+        <div class="col-md-4">
+            <input ng-model="route.sections[$index].form['id']" ng-change="update_route()" name="id" type="text" class="form-control" id="" placeholder="">
+            <span class="help-block">* Optional.  Has this Crossing already been completed? Enter the Shared Crossing # to skip this Crossing</span>
+        </div>
+    </div>
+    <div class="form-group has-feedback" ng-class="{'has-success': crossing_form.intersection1.$valid}">
+        <label for="intersection1" class="col-md-2 control-label">Intersection of</label>
+        <div class="col-md-4">
+            <input ng-model="route.sections[$index].form['intersection1']" ng-change="update_route()" name="intersection1" type="text" class="form-control" id="" placeholder="" required>
+            <span ng-if="crossing_form.intersection1.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="form-group has-feedback" ng-class="{'has-success': crossing_form.intersection2.$valid}">
+        <label for="intersection2" class="col-md-2 control-label">and</label>
+        <div class="col-md-4">
+            <input ng-model="route.sections[$index].form['intersection2']" ng-change="update_route()" name="intersection2" type="text" class="form-control" id="" placeholder="" required>
+            <span ng-if="crossing_form.intersection2.$valid" class="glyphicon glyphicon-ok form-control-feedback"></span>
+        </div>
+    </div>
+    <div class="form-group" ng-class="{'has-success': crossing_form.crossing_from.$valid}">
+        <label for="crossing_from" class="col-md-2 control-label">Crossing from</label>
+        <div class="col-md-4">
+            <div class="radio">
+                <label><input type="radio" ng-model="route.sections[$index].form['crossing_from']" ng-change="update_route()" name="crossing_from" value="1" required> North</label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" ng-model="route.sections[$index].form['crossing_from']" ng-change="update_route()" name="crossing_from" value="2" required> South</label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" ng-model="route.sections[$index].form['crossing_from']" ng-change="update_route()" name="crossing_from" value="3" required> East</label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" ng-model="route.sections[$index].form['crossing_from']" ng-change="update_route()" name="crossing_from" value="4" required> West</label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group" ng-class="{'has-success': crossing_form.crossing_to.$valid}">
+        <label for="crossing_to" class="col-md-2 control-label">Crossing to</label>
+        <div class="col-md-4">
+            <div class="radio">
+                <label><input type="radio" ng-model="route.sections[$index].form['crossing_to']" ng-change="update_route()" name="crossing_to" value="1" required> North</label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" ng-model="route.sections[$index].form['crossing_to']" ng-change="update_route()" name="crossing_to" value="2" required> South</label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" ng-model="route.sections[$index].form['crossing_to']" ng-change="update_route()" name="crossing_to" value="3" required> East</label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" ng-model="route.sections[$index].form['crossing_to']" ng-change="update_route()" name="crossing_to" value="4" required> West</label>
+            </div>
+        </div>
+    </div>
+</form>
+
+<hr />

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" {% if HTML_APP_CACHE %}manifest="{% url 'cache_manifest' %}"{% endif %}>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>MAPS</title>
+
+    <link rel="shortcut icon" href="{{ STATIC_URL }}ico/favicon.ico">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="apple-touch-icon" href="{{ STATIC_URL }}logos/ios/Icon.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ STATIC_URL }}logos/ios/Icon-72.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ STATIC_URL }}logos/ios/Icon@2x.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="{{ STATIC_URL }}logos/ios/Icon-72@2x.png" />
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ STATIC_URL }}css/styles.css" rel="stylesheet">
+
+    <!-- Angular core JavaScript
+    ================================================== -->
+    <script src="{{ STATIC_URL }}js/angular.min.js"></script>
+    <script src="{{ STATIC_URL }}js/angular-route.min.js"></script>
+    <script src="{{ STATIC_URL }}js/angular-sanitize.min.js"></script>
+
+    <!-- auxiliary -->
+    <script src="{{ STATIC_URL }}js/angular-local-storage.js"></script>
+
+    <!-- custom -->
+    <script src="{{ STATIC_URL }}js/ng/routes.js" ></script>
+    <script src="{{ STATIC_URL }}js/ng/controllers.js" ></script>
+    <script src="{{ STATIC_URL }}js/ng/directives.js" ></script>
+    <script src="{{ STATIC_URL }}js/ng/services.js" ></script>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <script src="{{ STATIC_URL }}js/jquery-1.11.1.min.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+
+    <!-- http://anseki.github.io/jquery-plainoverlay/ -->
+    <script src="{{ STATIC_URL }}js/jquery.plainoverlay.min.js"></script>
+
+</head>
+
+{% block body %}
+<body ng-app="maps" id="maps_body">
+    <div ng-view></div>
+</body>
+{% endblock %}
+</html>

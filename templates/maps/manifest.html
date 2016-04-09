@@ -1,0 +1,65 @@
+CACHE MANIFEST
+
+#version {{ MAPS_VERSION }}
+
+CACHE:
+
+#images
+{{ STATIC_URL }}images/not_available.jpg
+
+#internal HTML documents
+{% url 'base' %}
+{{ STATIC_URL }}templates/edit_route.html
+{{ STATIC_URL }}templates/segment_form.html
+{{ STATIC_URL }}templates/survey_row.html
+{{ STATIC_URL }}templates/crossing_form.html
+{{ STATIC_URL }}templates/culdesac_form.html
+{{ STATIC_URL }}templates/select.html
+{{ STATIC_URL }}templates/select_multiple.html
+{{ STATIC_URL }}templates/input.html
+{{ STATIC_URL }}templates/modal.html
+{{ STATIC_URL }}templates/edit_route.html
+{{ STATIC_URL }}templates/alert.html
+
+# views
+{% url 'ng_dashboard' %}
+{% url 'ng_add_route' %}
+{% url 'ng_route' %}
+{% url 'ng_login' %}
+
+#style sheets
+{{ STATIC_URL }}css/bootstrap.min.css
+{{ STATIC_URL }}css/styles.css
+
+#style sheet images
+
+
+#javascript files
+{{ STATIC_URL }}js/angular.min.js
+{{ STATIC_URL }}js/angular.min.js.map
+{{ STATIC_URL }}js/angular-route.min.js
+{{ STATIC_URL }}js/angular-route.min.js.map
+{{ STATIC_URL }}js/angular-sanitize.min.js
+{{ STATIC_URL }}js/angular-sanitize.min.js.map
+{{ STATIC_URL }}js/angular-local-storage.js
+{{ STATIC_URL }}js/ng/routes.js
+{{ STATIC_URL }}js/ng/controllers.js
+{{ STATIC_URL }}js/ng/directives.js
+{{ STATIC_URL }}js/ng/services.js
+{{ STATIC_URL }}js/jquery-1.11.1.min.js
+{{ STATIC_URL }}js/bootstrap.min.js
+{{ STATIC_URL }}js/jquery.plainoverlay.min.js
+
+#fonts
+{{ STATIC_URL }}fonts/glyphicons-halflings-regular.woff
+
+# dynamic resources
+{% for resource in resources %}
+{{ resource }}
+{% endfor %}
+
+NETWORK:
+*
+
+FALLBACK:
+{{ MEDIA_URL }}uploads/ {{ STATIC_URL }}images/not_available.jpg
